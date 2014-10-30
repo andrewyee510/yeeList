@@ -1,0 +1,23 @@
+
+
+<form action="/item/upload" enctype="multipart/form-data" method="post" ng-submit="uploadItem(newItem)">
+	<div class="row">
+		<label>Title</label>
+		<input type="text" name="title" ng-model="newItem.title" required>
+	</div>
+	<div class="row">
+		<label>Initial Price</label>
+		<input type="text" name="price" ng-model="newItem.price" required ng-pattern="/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/">
+	</div>	
+	<div class="row">
+		<label>DateTime</label>
+		<input type="datetime-local" name="dateTime" ng-model="newItem.dateTime" required placeholder="yyyy-MM-ddTHH:mm:ss"/>
+	</div>	
+	<div class="row">
+		<label style="float:left; margin-right:4px;">Description</label required>
+	    <textarea rows="4" cols="50" name="description" ng-model="newItem.description" required></textarea>
+	</div>
+
+    <input type="file" name="itemUpload" multiple="multiple" ng-model="newItem.itemUpload">
+    <input type="submit" value="Upload">
+ </form>

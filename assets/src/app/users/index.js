@@ -90,13 +90,14 @@ angular.module( 'sailng.users', [
         UserModel.getAll($scope).then(function(models) {
             $scope.users = models.data;
             var data =$scope.users;
+            console.log("andrew");
             console.log('data ',data)
             $scope.tableParams = new ngTableParams({
                 page: 1,            // show first page
                 count: 25,          // count per page
                 sorting: {
                     //  comboday: 'asc'     // initial sorting
-                    title: 'asc'
+                    title: 'asc' 
                 }
             }, {
                  total: data.length,

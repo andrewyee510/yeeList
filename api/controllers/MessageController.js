@@ -95,6 +95,8 @@ module.exports = {
                     return console.log(err);
                 }
                 else {
+                          console.log("message ", message);
+
                     Message.publishCreate(message);
                     res.json(message);
                 }

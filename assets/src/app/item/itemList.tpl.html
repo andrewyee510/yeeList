@@ -1,0 +1,5 @@
+
+<input ng-model="searchText" type="text" placeholder="Search" autofocus>
+<ul>
+    <li ng-repeat="item in items | filter:searchText">{{item.title}}</li>
+</ul>

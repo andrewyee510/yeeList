@@ -47,6 +47,22 @@ module.exports.routes = {
     'get /api/user': 'UserController.getAll',
     'get /api/user/:id': 'UserController.getOne',
     'post /api/user': 'UserController.create',
+     /**
+     * Item routes
+     */
+    'get /api/item/getAll': 'ItemController.getAll',
+    'post /api/item/sendMessage': 'ItemController.sendMessage',
+    'post /api/item/join/users': 'ItemController.join',
+
+    'get /item/:id':     'ItemController.detail',
+    'get /item/getAll':  'ItemController.getAll',
+    'get /item/search':  'ItemController.search',
+    'get /item/create':  'ItemController.create',
+    'post /item/upload': 'ItemController.upload',
+     /**
+     * Room routes
+     */
+    'get /api/room/join/:id': 'RoomController.join',
 
   /**
      * Message routes
@@ -58,11 +74,17 @@ module.exports.routes = {
     'put /api/message': 'MessageController.update',
 //    'put /api/message/:id': 'MessageController.update',
 
+    /**
+     * Zipcode routes
+     */
+    'get /api/zipcode': 'ZipcodeController.getByCity',
+
 
     'delete /api/message/:id': 'MessageController.destroy',
 
     //todo
     'get /api/todo': 'TodoController.getAll',
+    'get /todo/search': 'TodoController.search',
     'get /api/todo/:id': 'TodoController.getOne',
     'post /api/todo': 'TodoController.create',
     'delete /api/todo/:id': 'TodoController.destroy',
@@ -76,6 +98,8 @@ module.exports.routes = {
   'get /home': 'HomeController.index',
   'get /about': 'HomeController.index',
   'get /messages': 'HomeController.index',
-  'get /todos': 'HomeController.index'
+  'get /todos': 'HomeController.index',
+  'get /zipcodes': 'HomeController.index',
+  'get /itemLists': 'HomeController.index',
 
 };

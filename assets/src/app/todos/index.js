@@ -14,24 +14,15 @@ angular.module( 'sailng.todos', [
 	});
 })
 
-    //.controller( 'TodoCtrl', function TodoController( $scope, $sails, lodash, config,titleService, TodoModel,$filter, ngTableParams  ) {
-//
-//    //    titleService.setTitle('Messages');
-//    $scope.newTodo = {};
-//	$scope.todos = [];
-//	$scope.currentUser = config.currentUser;
-
     .controller( 'TodoCtrl', function TodoController( $scope, $sails, lodash, config, titleService, TodoModel,$filter, ngTableParams ) {
 
         $scope.newTodo = {};
-
         $scope.todos = [];
         $scope.currentUser = config.currentUser;
         //console.log('scope.currentUser.data:: ', $scope.currentUser)
         // old version $sails.on('message', function (envelope) {
         // see  assets/src/common/models/Todo.js
         $sails.on('todo', function (envelope) {
-
             switch(envelope.verb) {
                 case 'created':
                     $scope.todos.unshift(envelope.data);
@@ -87,7 +78,7 @@ angular.module( 'sailng.todos', [
 
         // var   messPromise =  MessageModel.getAll($scope);
         // messPromise.then(function (models) {
-
+            
         TodoModel.getAll($scope).then(function(models) {
             $scope.todos = models.data;
             var data =$scope.todos;

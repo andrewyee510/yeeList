@@ -18,7 +18,12 @@ module.exports.policies = {
   // (`true` allows public access) 
   '*': true,
 
-  '*': [ 'passport' ]
+  '*': [ 'passport' ],
+
+  ItemController: {
+  	//create:  [ 'passport', 'sessionAuth' ],
+  	//upload:  [ 'passport', 'sessionAuth' ],
+  }
 
   /*
 	// Here's an example of adding some policies to a controller

@@ -12,12 +12,16 @@ angular.module( 'sailng', [
     'ngTable',
 
 
+
     'directive.blink',
     'sailng.header',
 	'sailng.home',
 	'sailng.about',
 	'sailng.messages',
     'sailng.todos',
+    'sailng.zipcodes',
+    'sailng.itemLists',
+    'sailng.itemDetails',
     'sailng.users'
 
 ])

@@ -67,6 +67,7 @@ var AuthController = {
    */
   logout: function (req, res) {
     req.logout();
+    req.session.authenticated = false;
     res.redirect('/');
   },
 
@@ -129,6 +130,7 @@ var AuthController = {
         // will available.
         else {
         	console.log('currently logged in user is: ' + req.user.username);
+          req.session.authenticated = true
           res.redirect('/');
         }
       });

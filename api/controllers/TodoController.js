@@ -49,6 +49,10 @@ module.exports = {
                 // An error occured
             });
     },
+    search: function(req, res) {
+        res.view({
+        });
+    },
 //    getAll: function(req, res) {
 //    Todo.getAll().exec(function(e,listOfTodos){
 //console.log('listOfTodos ',e,listOfTodos)

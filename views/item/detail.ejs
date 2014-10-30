@@ -1,0 +1,40 @@
+<script>
+	//global var for angular js until i figure out how to pass GET params 
+	var itemId = "<%- model.id %>";
+</script>
+
+<div>
+	<label>Title</label>
+	<p><%- model.title %></p>
+	
+	<label>Price</label>
+	<p><%- model.price %></p>
+
+	<label>Description</label>
+	<p><%- model.description %></p>
+	
+	<label>Id</label>
+	<p><%- model.id %></p>
+</div>
+
+
+<div ng-controller="ItemDetailCtrl">
+	<input type="text" value=<%- model.id %> ng-model="itemId"  style="display: none;"/>
+	<div class="row">
+	    <div class="col-md-6">
+	        <form role="form" ng-submit="sendMessage(newMessage)">
+	            <div class="form-group">
+	                <input type="text" ng-model="newMessage.text" class="form-control" id="messageText" ng-disabled="!currentUser">
+	            </div>
+	            <button type="submit" class="btn btn-primary" ng-disabled="!currentUser || !newMessage.text">Submit</button>
+	        </form>
+	    </div>
+	    <div class="col-md-6">
+	        <h3>All Messages </h3>
+	        <ul>
+	            <li ng-repeat="message in messages"> {{message.username}} : {{message.text}} <b>at</b> {{message.dateTime}}
+	            </li>
+	        </ul>
+	    </div>
+	</div>
+</div>

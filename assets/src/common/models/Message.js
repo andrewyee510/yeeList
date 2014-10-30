@@ -29,18 +29,18 @@ angular.module('models.message', ['lodash', 'services', 'ngSails',])
 		return deferred.promise;
 	};
 
-        this.update = function(modelu) {
-            var deferred = $q.defer();
-            var url = utils.prepareUrl('message');
-            console.log ('modelu ',modelu);
+    this.update = function(modelu) {
+        var deferred = $q.defer();
+        var url = utils.prepareUrl('message');
+        console.log ('modelu ',modelu);
 
-            $sails.put(url, modelu, function(model) {
-                console.log ('after ',modelu);
+        $sails.put(url, modelu, function(model) {
+            console.log ('after ',modelu);
 
-                return deferred.resolve(model);
-            });
+            return deferred.resolve(model);
+        });
 
-            return deferred.promise;
-        };
+        return deferred.promise;
+    };
 
 });

@@ -1,0 +1,11 @@
+<h2>Location's</h2>
+<p>Open this page in two browsers and see how easy Sails.js makes realtime applications!</p>
+
+<div class="row">
+    <div class="col-md-8">
+        <h3>All Locations</h3>
+        <ul>
+            <li ng-repeat="zipcode in zipcodes">{{zipcode._id.city}} <b>by</b> {{zipcode._id.state }}</li>
+        </ul>
+    </div>
+</div>

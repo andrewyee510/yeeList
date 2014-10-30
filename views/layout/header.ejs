@@ -1,0 +1,23 @@
+<script>
+    
+      var navItems = [
+                      {url: '/messages', cssClass: 'fa fa-comments', title: 'Messages'},
+                      {url: '/todos', cssClass: 'fa fa-comments', title: 'Todos'},
+                      {url: '/zipcode', cssClass: 'fa fa-comments', title: 'Zipcode'},
+                      {url: '/about', cssClass: 'fa fa-infoc-circle', title: 'About'}
+                     ];
+
+     var session     =    <%- JSON.stringify(req.session) %>
+     var currentUser =    <%- JSON.stringify(req.user) %>
+     console.log(session);
+     console.log(currentUser);
+    if (session.passport.length > 0) {
+      navItems.push({url: '/logout', cssClass: 'fa fa-comments', title: 'Logout'});
+    }
+    else {
+      navItems.push({url: '/register', cssClass: 'fa fa-briefcase', title: 'Register'});
+      navItems.push({url: '/login', cssClass: 'fa fa-comments', title: 'Login'});
+    }
+   
+
+</script>

@@ -21,6 +21,8 @@ angular.module( 'sailng.messages', [
 
    // see  assets/src/common/models/Message.js
 	$sails.on('message', function (envelope) {
+        console.log('envelope.data messages:: ', envelope.verb);
+
 		switch(envelope.verb) {
 			case 'created':
 				$scope.messages.unshift(envelope.data);
@@ -41,13 +43,13 @@ angular.module( 'sailng.messages', [
         }
     });
 
-        $scope.updateMessage = function(message) {
-         //   if (config.currentUser.role === '4') {
-                message.title += ' added text';
-                MessageModel.update(message).then(function(model) {
-               });
-           // }
-        };
+    $scope.updateMessage = function(message) {
+     //   if (config.currentUser.role === '4') {
+            message.title += ' added text';
+            MessageModel.update(message).then(function(model) {
+           });
+       // }
+    };
 
 	$scope.destroyMessage = function(message) {
 		// check here if this message belongs to the currentUser
@@ -60,9 +62,12 @@ angular.module( 'sailng.messages', [
 
 	$scope.createMessage = function(newMessage) {
 		newMessage.user = config.currentUser.id;
+					console.log("11 test");
 
 		MessageModel.create(newMessage).then(function(model) {
-			$scope.newMessage = {};
+			$scope.newMessage.title = '';
+			console.log($scope.newMessage.title);
+			console.log("Andrew test");
 		});
 	};
 
@@ -71,4 +76,4 @@ angular.module( 'sailng.messages', [
 	});
 
 
-    });
+});

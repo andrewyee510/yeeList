@@ -138,8 +138,8 @@ angular.module('sailng.messages', [
                 case 'created':
                     $scope.messages.unshift(envelope.data);
                     console.log('envelope.data:: ', envelope.data.comoboday, envelope.data)
-                    $scope.tableParams.data = $scope.messages;
-                    $scope.tableParams.reload();
+                    //$scope.tableParams.data = $scope.messages;
+                    //$scope.tableParams.reload();
                     //               if( $scope.tableParams.settings().groupBy === 'comboday')
                     //               { $scope.tableParams.settings().groupBy = 'title';
                     //               } else $scope.tableParams.settings().groupBy = 'comboday';// this works
@@ -242,8 +242,10 @@ angular.module('sailng.messages', [
             console.log('createMessage:: ', newMessage.cdate, newMessage)
             MessageModel.create(newMessage).then(function (model) {
                 $scope.newMessage.title = '';
+                console.log("aaa");
 
             });
+            $scope.newMessage.title = '';
         };
 // var   messPromise =  MessageModel.getAll($scope);
 // messPromise.then(function (models) {

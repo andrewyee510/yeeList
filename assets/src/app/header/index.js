@@ -8,7 +8,8 @@ angular.module( 'sailng.header', [
         {title: 'Messages', translationKey: 'navigation:messages', url: '/messages', cssClass: 'fa fa-comments'},
         {title: 'Todos', translationKey: 'navigation:todos', url: '/todos', cssClass: 'fa fa-comments'},
         {title: 'Users', translationKey: 'navigation:users', url: '/users', cssClass: 'fa fa-comments'},
-        {title: 'About', translationKey: 'navigation:about', url:'/about',cssClass: 'fa fa-info-circle'}
+        {title: 'About', translationKey: 'navigation:about', url:'/about',cssClass: 'fa fa-info-circle'},
+        {title: 'Zipcode', translationKey: 'navigation:zipcodes', url:'/zipcodes',cssClass: 'fa fa-info-circle'}
     ];
 
     if (!$scope.currentUser) {
