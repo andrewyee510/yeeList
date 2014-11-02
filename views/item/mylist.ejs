@@ -1,0 +1,25 @@
+<style type="text/css">
+	.item ul {position:relative; list-style-type:none;}
+	.item li {width:100%; float:left;}
+	.item li  a { margin:34px 0 0 20px; float:left;}
+	.item li .imageContainer {width:50px; height:50px; overflow: hidden; float:left; margin-top:20px;}
+	.item li .imageContainer img { width:50px;}
+</style>
+
+
+<div ng-controller="ItemMylistCtrl" class="item">
+    <label style="margin: 20px 20px 0 0; ">Search Item</label>
+    <input ng-model="search.title" type="text" placeholder="Search" autofocus>
+	<label style="margin:0 20px 0 40px">Price</label>
+    <input ng-model="min" type="number" placeholder="Min" style="width:100px;" min=0>
+    <input ng-model="max" type="number" placeholder="Max" style="width:100px;" min=0>
+
+    <ul>
+        <li ng-repeat="item in items | filter:search | filter: matchAmount ">
+        	<div class="imageContainer">
+        		<img ng-src="/images/{{item.fileName}}" />
+        	</div>
+        	<a ng-href="/item/{{item.id}}">{{item.title}} &nbsp; ${{item.price}} </a>
+        </li>
+    </ul>
+</div>
