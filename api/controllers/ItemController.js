@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing items
  * @help        :: See http://links.sailsjs.org/docs/controllers
  */
-
+var fs = require('fs');
 module.exports = {
 	create: function(req, res) {
 
@@ -21,8 +21,9 @@ module.exports = {
 
     // check if file is existing and change filename if necessary
     while(fs.existsSync(".tmp/uploads/" +filename)){
-       // Add 4 random chars at he beginning of the filename
-       filename = randString(3)+"_"+origifile; 
+       // Add 4 random chars at he beginning of the filename 1-9999
+      var randomNumber =  Math.floor((Math.random() * 1000) + 1);
+      filename = randomNumber +"_"+origifile; 
     };
 
     var model = {
@@ -33,32 +34,64 @@ module.exports = {
         fileName : filename,
         user: user
     };
-    console.log('in upload', model);
 
-
-		uploadFile.upload({ dirname: './../../assets/images'},function onUploadComplete (err, files) {              // Files will be uploaded to ./assets/images
+    uploadFile.upload({ dirname: './../../assets/images', saveAs: filename},
+                      function onUploadComplete (err, files) {              // Files will be uploaded to ./assets/images
                                                                               
           if (err) return res.serverError(err);                              // IF ERROR Return and send 500 error with error
-          
-          console.log(files);
+
           Item.create(model)
-            .exec(function (err, message) {
+            .exec(function (err, item) {
                 if (err) {
                     return console.log(err);
                 }
                 else {
                     //res.json(message);
-                  res.json({status:200,file:files});
+                  //res.json({status:200,file:files});
+                  res.redirect('/item/'+ item.id);
+
                 }
             });
-      	});
-        
+        });
+    /*
+    uploadFile.upload(filename,function (err, files) {
+        fs.rename(".tmp/uploads/"+files[0].filename, "./../../assets/images/" +files[0].filename, function(err){
+          console.log(err);
+          Item.create(model)
+            .exec(function (err, item) {
+                if (err) {
+                    return console.log(err);
+                }
+                else {
+                    //res.json(message);
+                  //res.json({status:200,file:files});
+                  res.redirect('/item/'+ item.id);
+
+                }
+            });
+        });
+    });
+    */
+
+
+
     },
 
     getAll: function(req, res) {
       Item.getAll()
       .spread(function(models) {
           console.log('in getAll Items', models)
+          res.json({data:models});
+      })
+      .fail(function(err) {
+        // An error occured
+      });
+    },
+
+    getMylist: function(req, res) {
+      Item.getMylist(req.param('id'))
+      .spread(function(models) {
+          console.log('in getMyList Items', models)
           res.json({data:models});
       })
       .fail(function(err) {
@@ -81,7 +114,14 @@ module.exports = {
     },
 
     search: function(req, res) {
-
+      console.log(req);
+      res.view({
+        //navItems: navItems,
+      });
+    },
+    
+    mylist: function(req, res) {
+      console.log(req);
       res.view({
         //navItems: navItems,
       });
@@ -91,54 +131,35 @@ module.exports = {
     sendMessage: function (req, res) {
       var itemId = req.param('itemId');
       var userId = req.param('user');
-      var user   = User.getOne(userId)
-                      .spread(function(model) {
-                                  console.log('in getOne user', model)
-                        res.json(model);
-                      })
-                      .fail(function(err) {
-                      });
-      var currentdate = new Date(); 
-      var dateTime =  currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/" 
-                + currentdate.getFullYear() + " @ "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes();
-
-      var message = {
-            text: req.param('text'),
-            dateTime: dateTime,
-            id: '1',
-            user: user,
-        };
-
-      /*
-      Item.getOne(req.param('itemId'))
+      User.getOne(userId)
       .spread(function(model) {
-          console.log("subscribe itemId");
-          //Item.subscribe(req.socket, model);
+            var currentdate = new Date(); 
+            var dateTime =  currentdate.getDate() + "/"
+                      + (currentdate.getMonth()+1)  + "/" 
+                      + currentdate.getFullYear() + " @ "  
+                      + currentdate.getHours() + ":"  
+                      + currentdate.getMinutes();
 
+            var message = {
+                  text: req.param('text'),
+                  dateTime: dateTime,
+                  id: '1',
+                  user: model,
+              };
+
+
+            Item.getOne(itemId)
+            .spread(function(model) {
+                Item.message(model.id, {msg: message});
+                console.log("does this even work");
+            })
+        .fail(function(err) {
+          // An error occured
+        });
       })
       .fail(function(err) {
-        // An error occured
-      });  
-
-      Item.watch(req); 
-      Item.publishCreate(message);
-      res.json(message);
-      */
-
-    
-
-
-      Item.getOne(itemId)
-      .spread(function(model) {
-          Item.message(model.id, {msg: message});
-          console.log("does this even work");
-      })
-      .fail(function(err) {
-        // An error occured
       });
+  
 
 
 

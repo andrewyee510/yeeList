@@ -15,13 +15,15 @@ angular.module( 'sailng', [
 
     'directive.blink',
     'sailng.header',
-	'sailng.home',
+	//'sailng.home',
 	'sailng.about',
 	'sailng.messages',
     'sailng.todos',
     'sailng.zipcodes',
     'sailng.itemLists',
     'sailng.itemDetails',
+    'sailng.itemMylist',
+    'sailng.register',
     'sailng.users'
 
 ])
@@ -33,7 +35,7 @@ angular.module( 'sailng', [
 	// $urlRouterProvider.otherwise( '/home' );
 	$urlRouterProvider.otherwise(function ($injector, $location) {
 		if ($location.$$url === '/') {
-			window.location = '/home';
+			window.location = '/';
 		}
 		else {
 			// pass through to let the web server handle this request

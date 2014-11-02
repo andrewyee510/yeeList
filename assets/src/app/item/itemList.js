@@ -16,10 +16,22 @@ angular.module( 'sailng.itemLists', [
         
 
     .controller( 'ItemListCtrl', function ItemListController( $scope, $sails, lodash, config, titleService, ItemModel ,$filter ) {
-        console.log("itemlist ctrl");
-        $scope.items = [];
-        
-        console.log('socket io item');
+        $scope.items = [];    
+
+        $scope.matchAmount = function(item){
+            $scope.min = ($scope.min == "" || $scope.min == null) ? undefined : $scope.min; 
+            $scope.max = ($scope.max == "" || $scope.max == null) ? undefined : $scope.max; 
+            
+            if(typeof $scope.min != "undefined" && typeof $scope.max == "undefined"){
+                return item.price >= $scope.min;
+            }else if(typeof $scope.min == "undefined" && typeof $scope.max != "undefined"){
+                return item.price <= $scope.max;
+            }else if(typeof $scope.min != "undefined"  && typeof $scope.max != "undefined"){
+                return item.price >= $scope.min && item.price <= $scope.max
+            }
+            return true;
+        }
+
         $sails.on('item', function (envelope) {
 
             switch(envelope.verb) {

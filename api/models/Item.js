@@ -37,10 +37,6 @@ module.exports = {
 		user: {
 			model: 'user'
 		},
-        users: {
-            collection: 'user',
-            via: 'items'
-        }
 	},
 
 
@@ -53,6 +49,13 @@ module.exports = {
 
     getOne: function(id) {
         return Item.findOne(id)
+        .then(function (model) {
+            return [model];
+        });
+    }, 
+
+    getMylist: function(id) {
+        return Item.find( {where: { user: id }})
         .then(function (model) {
             return [model];
         });

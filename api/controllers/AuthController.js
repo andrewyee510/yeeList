@@ -43,7 +43,6 @@ var AuthController = {
       , slug : key
       };
     });
-
     // Render the `auth/login.ext` view
     res.view({
       providers : providers

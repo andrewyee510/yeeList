@@ -1,23 +1,33 @@
+<%
+var reqUser = ( typeof req.user != "undefined") ? JSON.stringify(req.user) : "''";
+%>
+
 <script>
     
-      var navItems = [
-                      {url: '/messages', cssClass: 'fa fa-comments', title: 'Messages'},
-                      {url: '/todos', cssClass: 'fa fa-comments', title: 'Todos'},
-                      {url: '/zipcode', cssClass: 'fa fa-comments', title: 'Zipcode'},
-                      {url: '/about', cssClass: 'fa fa-infoc-circle', title: 'About'}
-                     ];
+    var navItems = [];
 
-     var session     =    <%- JSON.stringify(req.session) %>
-     var currentUser =    <%- JSON.stringify(req.user) %>
-     console.log(session);
-     console.log(currentUser);
-    if (session.passport.length > 0) {
+     var session     =    <%- JSON.stringify(req.session) %> ;
+     console.log("andrew");
+     var currentUser =    <%- reqUser %> ;
+  
+    if (!isEmpty(session.passport)) {
+      navItems.push({url: '/item/mylist', cssClass: 'fa fa-comments', title: 'My Items'}),
+      navItems.push({url: '/item/create', cssClass: 'fa fa-comments', title: 'Create Item'}),
       navItems.push({url: '/logout', cssClass: 'fa fa-comments', title: 'Logout'});
     }
     else {
       navItems.push({url: '/register', cssClass: 'fa fa-briefcase', title: 'Register'});
       navItems.push({url: '/login', cssClass: 'fa fa-comments', title: 'Login'});
     }
-   
 
+
+    function isEmpty(obj) {
+        for(var prop in obj) {
+            if(obj.hasOwnProperty(prop))
+                return false;
+        }
+
+        return true;
+    }
+   
 </script>

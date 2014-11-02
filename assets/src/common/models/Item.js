@@ -14,8 +14,17 @@ angular.module('models.item', ['lodash', 'services', 'ngSails',])
 	this.getAll = function() {
         var deferred = $q.defer();
         var url = utils.prepareUrl('item/getAll');
-		console.log(url);
-        url = "http://localhost:1337/api/item/getAll";
+        $sails.get(url, function(models) {
+            return deferred.resolve(models);
+        });
+        return deferred.promise;
+    };
+
+    this.getMylist = function(userId) {
+        var deferred = $q.defer();
+        console.log(userId);
+        var url = utils.prepareUrl('item/getMylist/'+ userId);
+        console.log(url);
         $sails.get(url, function(models) {
             return deferred.resolve(models);
         });

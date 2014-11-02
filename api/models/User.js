@@ -16,35 +16,6 @@ module.exports = {
 			type: 'string',
 			required: true
 		},
-        role: {
-            type: 'INTEGER',
-            required: false
-        },
-
-        make: {
-            type: 'string',
-            required: false
-        },
-        model: {
-            type: 'string',
-            required: false
-        },
-        year: {
-            type: 'INTEGER',
-            required: false
-        },
-        plate: {
-            type: 'string',
-            required: false
-        },
-        state: {
-            type: 'INTEGER',
-            required: false
-        },
-        no: {
-            type: 'string',
-            required: false
-        },
 
 		message_count: {
 			type: 'number'
@@ -53,12 +24,6 @@ module.exports = {
 		messages: {
 			collection: 'message',
 			via: 'user'
-		},
-
-		items: {
-			collection: 'item',
-			via: 'users',
-			dominant: true
 		},
 
 		passports : { collection: 'Passport', via: 'user' }

@@ -1,40 +1,181 @@
-<script>
+<style type="text/css">
+	.itemContainer {width:100%; height:550px; margin-top: 20px;}
+	.itemContainer .left { width:820px; height: 450px; float:left;}	
+	
+	.itemContainer .right .item { width: 100%; height:70px; }	
+	.itemContainer .right .item .description { width:250px; float:left; margin-top:10px;}	
+	.itemContainer .right .item .imgContainer { overflow:hidden; height: 70px; }	
+	.itemContainer .right .item .imgContainer img { width:70px; height:auto;}	
+	.itemContainer .right { width:320px; float:left;}	
+	.itemContainer .right .chatBox {border:1px solid; overflow-y:scroll; overflow-x:visible; width:320px; height:400px; margin-left:14px;}	
+	.itemContainer .right ul { list-style-type: none; padding-left:0px;}	
+	.itemContainer .right ul li { border: 1px solid #e1e1e1;}	
+	.itemContainer .right input { width: 320px; }	
+
+	.itemContainer .bottomDescription { width:100%; margin-top:20px; font-size:14px; font-family:sans-serif;}
+	.itemContainer .bottomDescription label { font-size:18px; font-weight: bold; text-decoration: underline;}
+
+</style>
+
+<script type="text/javascript">
 	//global var for angular js until i figure out how to pass GET params 
 	var itemId = "<%- model.id %>";
+	console.log(<%- JSON.stringify(model) %>);
+	//currentUser defined in header.ejs
 </script>
 
-<div>
-	<label>Title</label>
-	<p><%- model.title %></p>
-	
-	<label>Price</label>
-	<p><%- model.price %></p>
+<div class="itemContainer">
+	<div class="left">
+		<!-- just copy this <section> and next script -->
+		<section class="experiment">
 
-	<label>Description</label>
-	<p><%- model.description %></p>
-	
-	<label>Id</label>
-	<p><%- model.id %></p>
-</div>
-
-
-<div ng-controller="ItemDetailCtrl">
-	<input type="text" value=<%- model.id %> ng-model="itemId"  style="display: none;"/>
-	<div class="row">
-	    <div class="col-md-6">
-	        <form role="form" ng-submit="sendMessage(newMessage)">
-	            <div class="form-group">
-	                <input type="text" ng-model="newMessage.text" class="form-control" id="messageText" ng-disabled="!currentUser">
-	            </div>
-	            <button type="submit" class="btn btn-primary" ng-disabled="!currentUser || !newMessage.text">Submit</button>
-	        </form>
-	    </div>
-	    <div class="col-md-6">
-	        <h3>All Messages </h3>
-	        <ul>
-	            <li ng-repeat="message in messages"> {{message.username}} : {{message.text}} <b>at</b> {{message.dateTime}}
-	            </li>
-	        </ul>
-	    </div>
+			<% 
+			
+			if( typeof req.user != "undefined" &&   
+				req.user.id == model.user){
+			%>  
+			    <section style="position:absolute; margin-left:10px; z-index:10000;">
+			        <button id="setup-new-broadcast" class="setup btn btn-primary" onclick="newBroadcast(this)">Live Stream</button>
+			    </section>
+			<% 
+			}
+			%>                
+		    <!-- local/remote videos container -->
+		    <div id="videos-container">
+		    <video id="tempVideo" src="" controls="" width="724" height="543"></video>
+		    </div>
+		</section>
+	</div>
+	<div class="right">
+		<div class="item">
+			<div class="description">
+				<p><%- model.title %></p>	
+				<p>$<%- model.price %> </p>	
+			</div>
+			<div class="imgContainer">
+				<img src='/images/<%- model.fileName %>'/>
+			</div>
+		</div>
+		<div ng-controller="ItemDetailCtrl">
+			<input type="text" value=<%- model.id %> ng-model="itemId"  style="display: none;"/>
+			<div class="row">
+				<div class="chatBox" >
+			        <ul>
+			            <li ng-repeat="message in messages"> {{message.user.email}} : {{message.text}} <b>at</b> {{message.dateTime}}
+			            </li>
+			        </ul>
+			    </div>
+			    <div class="col-md-6">
+			        <form role="form" ng-submit="sendMessage(newMessage)">
+			            <div class="form-group">
+			                <input type="text" ng-model="newMessage.text" class="form-control" id="messageText" ng-disabled="!currentUser">
+			            </div>
+			            <button type="submit" class="btn btn-primary" ng-disabled="!currentUser || !newMessage.text">Submit</button>
+			        </form>
+			    </div>
+			</div>
+		</div>
+	</div>
+	<div class="bottomDescription">
+		<label>Description</label>
+		<p><%- model.description %></p>
 	</div>
 </div>
+
+
+<script src="https://cdn.webrtc-experiment.com/firebase.js"> </script>
+<script src="https://cdn.webrtc-experiment.com/RTCMultiConnection.js"> </script>
+
+<script>
+	// Muaz Khan     - https://github.com/muaz-khan
+	// MIT License   - https://www.webrtc-experiment.com/licence/
+	// Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/RTCMultiConnection
+
+	var connection = new RTCMultiConnection();
+	connection.session = {
+	    audio: true,
+	    video: true,
+	    oneway: true
+	};
+
+	connection.onstream = function(e) {
+	    e.mediaElement.width = 724;
+	    videosContainer.insertBefore(e.mediaElement, videosContainer.firstChild);
+	    rotateVideo(e.mediaElement);
+	    //scaleVideos();
+	};
+
+	function rotateVideo(mediaElement) {
+	    mediaElement.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(0deg)';
+	    setTimeout(function() {
+	        mediaElement.style[navigator.mozGetUserMedia ? 'transform' : '-webkit-transform'] = 'rotate(360deg)';
+	    }, 1000);
+	}
+
+	connection.onstreamended = function(e) {
+	    e.mediaElement.style.opacity = 0;
+	    rotateVideo(e.mediaElement);
+	    setTimeout(function() {
+	        if (e.mediaElement.parentNode) {
+	            e.mediaElement.parentNode.removeChild(e.mediaElement);
+	        }
+	        //scaleVideos();
+	    }, 1000);
+	};
+
+	var sessions = { };
+	connection.onNewSession = function(session) {
+		//exit if same as the person started the broadcase
+		if (sessions[session.sessionid]) return;
+        
+
+        if (!session) throw 'No such session exists.';
+        connection.join(session);
+	};
+
+	var videosContainer = document.getElementById('videos-container') || document.body;
+
+
+	
+	newBroadcast = function($this){
+		$this.disabled = true;  
+		$this.style.display = 'none';
+		document.getElementById('tempVideo').style.display = 'none';
+		connection.open(itemId);
+	}
+
+	// setup signaling to search existing sessions
+	connection.connect();
+
+	function scaleVideos() {
+	    var videos = document.querySelectorAll('video'),
+	        length = videos.length, video;
+
+	    var minus = 130;
+	    var windowHeight = 700;
+	    var windowWidth = 600;
+	    var windowAspectRatio = windowWidth / windowHeight;
+	    var videoAspectRatio = 4 / 3;
+	    var blockAspectRatio;
+	    var tempVideoWidth = 0;
+	    var maxVideoWidth = 0;
+
+	    for (var i = length; i > 0; i--) {
+	        blockAspectRatio = i * videoAspectRatio / Math.ceil(length / i);
+	        if (blockAspectRatio <= windowAspectRatio) {
+	            tempVideoWidth = videoAspectRatio * windowHeight / Math.ceil(length / i);
+	        } else {
+	            tempVideoWidth = windowWidth / i;
+	        }
+	        if (tempVideoWidth > maxVideoWidth)
+	            maxVideoWidth = tempVideoWidth;
+	    }
+	    for (var i = 0; i < length; i++) {
+	        video = videos[i];
+	        if (video)
+	            video.width = maxVideoWidth - minus;
+	    }
+	}
+
+	//window.onresize = scaleVideos;
+</script>

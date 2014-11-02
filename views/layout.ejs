@@ -42,9 +42,9 @@
     <%- partial('layout/header') %>
 
     <div ng-include="'header/index.tpl.html'"></div>
-
-    <%- body %>
-
+    <div class="container">
+      <%- body %>
+    </div>
 
     <!--
 
@@ -85,11 +85,13 @@
     <script src="/bower_components/moment/min/moment.min.js"></script>
     <script src="/src/app/about/index.js"></script>
     <script src="/src/app/app.js"></script>
+    <script src="/src/app/auth/register.js"></script>
     <script src="/src/app/header/index.js"></script>
     <script src="/src/app/home/index.js"></script>
     <script src="/src/app/item/itemCreate.js"></script>
     <script src="/src/app/item/itemDetail.js"></script>
     <script src="/src/app/item/itemList.js"></script>
+    <script src="/src/app/item/itemMylist.js"></script>
     <script src="/src/app/messages/index.js"></script>
     <script src="/src/app/messagesx/index.js"></script>
     <script src="/src/app/todos/index.js"></script>

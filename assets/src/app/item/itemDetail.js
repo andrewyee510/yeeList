@@ -13,7 +13,7 @@ angular.module( 'sailng.itemDetails', [
         $sails.on('item', function (envelope) {
 
             console.log("envelope", envelope);
-            $scope.messages.unshift(envelope.data);
+            $scope.messages.unshift(envelope.data.msg);
             /*
             switch(envelope.verb) {
                 case 'created':
