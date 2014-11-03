@@ -35,7 +35,7 @@ module.exports = {
         user: user
     };
 
-    uploadFile.upload({ dirname: './../../assets/images', saveAs: filename},
+    uploadFile.upload({ dirname: './../../public/images', saveAs: filename},
                       function onUploadComplete (err, files) {              // Files will be uploaded to ./assets/images
                                                                               
           if (err) return res.serverError(err);                              // IF ERROR Return and send 500 error with error

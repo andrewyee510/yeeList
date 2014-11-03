@@ -128,7 +128,7 @@
 		//exit if same as the person started the broadcase
 		if (sessions[session.sessionid]) return;
         
-
+		document.getElementById('tempVideo').style.display = 'none';
         if (!session) throw 'No such session exists.';
         connection.join(session);
 	};
