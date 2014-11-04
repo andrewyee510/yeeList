@@ -27,8 +27,8 @@ module.exports.routes = {
   // 
   // (Alternatively, remove this and add an `index.html` file in your `assets` directory)
   'get /': {
-    controller: 'HomeController',
-    action: 'index'
+    controller: 'ItemController',
+    action: 'search'
   },
 
   'get /login': 'AuthController.login',
@@ -51,19 +51,17 @@ module.exports.routes = {
      * Item routes
      */
     'get /api/item/getAll': 'ItemController.getAll',
+    'get /api/item/getMylist/:id':  'ItemController.getMylist',
     'post /api/item/sendMessage': 'ItemController.sendMessage',
     'post /api/item/join/users': 'ItemController.join',
 
-    'get /item/:id':     'ItemController.detail',
+    'get /item/create':  'ItemController.create',
     'get /item/getAll':  'ItemController.getAll',
     'get /item/search':  'ItemController.search',
-    'get /item/create':  'ItemController.create',
+    'get /item/mylist':  'ItemController.mylist',
     'post /item/upload': 'ItemController.upload',
-     /**
-     * Room routes
-     */
-    'get /api/room/join/:id': 'RoomController.join',
-
+    'get /item/:id':     'ItemController.detail',
+ 
   /**
      * Message routes
      *
@@ -96,7 +94,7 @@ module.exports.routes = {
   // and examples.
 
   'get /home': 'HomeController.index',
-  'get /about': 'HomeController.index',
+  'get /about': 'HomeController.about',
   'get /messages': 'HomeController.index',
   'get /todos': 'HomeController.index',
   'get /zipcodes': 'HomeController.index',

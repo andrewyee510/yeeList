@@ -33,6 +33,8 @@
         <button type="submit" class="btn btn-default">Register</button>
       </div>
     </div>
-    <p class="errors"> <%- errors %> </p>
-  </form>
+    <% if( typeof errors[0] != "undefined") { %>
+            <p class="errors"><%- __(errors[0]) %></p>
+      <% } %>
+    </form>
 </div>

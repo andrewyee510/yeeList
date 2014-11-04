@@ -21,8 +21,8 @@ module.exports.policies = {
   '*': [ 'passport' ],
 
   ItemController: {
-  	//create:  [ 'passport', 'sessionAuth' ],
-  	//upload:  [ 'passport', 'sessionAuth' ],
+  	create:  [ 'passport', 'sessionAuth' ],
+  	upload:  [ 'passport', 'sessionAuth' ],
   }
 
   /*

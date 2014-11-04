@@ -5,5 +5,10 @@ module.exports = {
 			title: 'Home',
 			//navItems: navItems,
 		});
+	},
+
+	about: function(req, res) {		
+		res.view({
+		});
 	}
 };

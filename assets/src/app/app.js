@@ -16,7 +16,7 @@ angular.module( 'sailng', [
     'directive.blink',
     'sailng.header',
 	//'sailng.home',
-	'sailng.about',
+	//'sailng.about',
 	'sailng.messages',
     'sailng.todos',
     'sailng.zipcodes',
